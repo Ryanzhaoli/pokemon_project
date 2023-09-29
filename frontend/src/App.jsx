@@ -11,7 +11,7 @@ export default function App() {
      <Header/>
       <Routes>    
         <Route path ="/" element = {<HomePage />}> </Route>
-        <Route path = "/:id"  element = {<DetailsPage />} > </Route>
+        <Route path = "/pokemon/:id"  element = {<DetailsPage />} > </Route>
        </Routes>
     </BrowserRouter>
   )

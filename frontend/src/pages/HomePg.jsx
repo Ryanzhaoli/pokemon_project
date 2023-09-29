@@ -54,11 +54,11 @@ export default function HomePage() {
       <div className="pokemon-list">
         {listPokemon.map(pokemon => (
           <div key={pokemon.id} className="pokemon-item">
-            <img src={pokemon.img} alt={pokemon.name} />
-            <h3> <Link to={`/${pokemon.id}`}> {pokemon.name} </Link> </h3>
-            <p>Num: {pokemon.num}</p>
+            {/* <img src={pokemon.img} alt={pokemon.name} /> */}
+            <h3> <Link to={`/pokemon/${pokemon.id}`}> {pokemon.name} </Link> </h3>
+            {/* <p>Num: {pokemon.num}</p>
             <p>Type: {pokemon.type.join(', ')}</p>
-            <p>Weaknesses: {pokemon.weaknesses.join(', ')}</p>
+            <p>Weaknesses: {pokemon.weaknesses.join(', ')}</p> */}
           </div>
         ))}
       </div>

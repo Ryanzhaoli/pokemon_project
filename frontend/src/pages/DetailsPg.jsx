@@ -1,42 +1,42 @@
-import React ,{useState, useEffect} from 'react';
-import { Link ,useParams } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 export default function DetailsPage () {
 
-  let [pokemon, setPokemon] = useState([]);
-
-  let {id} = useParams(); 
-  
-
-  useEffect(() => {
-    fetch(`https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json/${id}`) 
-      .then(response => response.json())
-      .then(data => setPokemon(data.pokemon))
-      .catch(error => console.error(error));
-  }, [id]);
+  const [item, setItem] = useState([]);
+  const [types, setTypes] = useState();
+  const [weaknesses, setWeaknesses] = useState();
+  const [nextEvolution, setNextEvolution] = useState();
+  const { id } = useParams();
 
    
-   // codes are not working , I tried ...
+  useEffect(() => {
+    fetch(
+      "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setItem(data.pokemon[id - 1]);
+        setTypes(data.pokemon[id-1].type.join(', '))
+        setWeaknesses(data.pokemon[id-1].weaknesses.join(', '))
+        setNextEvolution(data.pokemon[id-1].next_evolution[0].name)
+      }) 
+        .catch(error => console.error( error))
+  }, [id]);
+   
   
   return (
     <div className="pokemon-details">
-      <h2>{pokemon.name} Details</h2>
-      <img src={pokemon.img} alt={pokemon.name} />
-      <p>Num: {pokemon.num}</p> 
-      <p>Type: {pokemon.type}</p>
-      <p>Weaknesses: {pokemon.weaknesses}</p>
+      <h2>{item.name} Details</h2>
+      <img src={item.img} alt={item.name} />
+      <p>Num: {item.num}</p> 
+      <p>Type: {types}</p> 
+      <p>Weaknesses: {weaknesses}</p>
+      <p>Evolutions:   {nextEvolution} </p>
       <Link to="/">Back to Index</Link>
-      {pokemon.next_evolution && (
-        <div>
-          <h3>Next Evolution</h3>
-          {pokemon.next_evolution.map(evolution => (
-            <div key={evolution.num}>
-              <Link to={`/${evolution.num}`}>{evolution.name}</Link>
-            </div>
-          ))}
-        </div>
-      )}
+     
     </div>
   );
 }
